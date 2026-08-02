@@ -36,6 +36,15 @@ files have been modified by the MaxCloner project relative to upstream:
       Class loader now includes split APKs on the dex path and is given an
       explicit native library search path.
 
+  Bcore/src/main/java/top/niunaijun/blackbox/app/configuration/ClientConfiguration.java
+      getLogSenderChatId() now returns null instead of a hardcoded upstream
+      Telegram chat id, disabling automatic upload of device logs to a
+      third party.
+
+  app/src/main/res/xml/setting.xml
+      Removed the "Send Logs" preference, which uploaded logs to the
+      upstream project rather than to the operator of this build.
+
   app/build.gradle
       Application id, release signing configuration, APK output naming.
 
