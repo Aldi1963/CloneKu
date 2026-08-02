@@ -1,89 +1,86 @@
-# BlackBox - Virtual Engine
+# MaxCloner
 
-<p align="center">
-  <img src="assets/usage.gif" alt="BlackBox Banner" width="100%"/>
-</p>
+Run multiple independent copies of the same Android app on one device, without root.
 
-BlackBox is a virtual engine that allows you to clone and run virtual applications on Android devices without installing APKs. This project works on Android 5.0 to 14.0+ and supports multiple architectures (ARM64, ARMv7, x86).
+Free and unrestricted: **no ads, no subscription, no limit on the number of clones.**
 
-## Overview
+## Install
 
-This enhanced edition includes bug fixes, stability improvements, and Android 14+ compatibility tailored for modern devices.
+Grab the latest APK from [Releases](../../releases).
 
-### Key Features
+- **`MaxCloner_*_arm64-v8a-release.apk`** — use this on virtually any modern phone.
+- `MaxCloner_*_universal-release.apk` — fallback if the above refuses to install.
+- `MaxCloner_*_armeabi-v7a-release.apk` — very old 32-bit devices only.
 
-*   **Virtual App Cloning**: Run multiple instances of applications.
-*   **Sandboxed Environment**: Isolated process execution.
-*   **No Root Required**: Runs entirely in userspace.
-*   **Multi-Architecture**: Support for 32-bit and 64-bit apps.
-*   **Device Spoofing**: Modify device information for virtual apps.
-*   **Fake Location**: Spoof GPS coordinates.
+### Automatic updates via Obtainium
 
-## Requirements
+Add this repository's URL in [Obtainium](https://github.com/ImranR98/Obtainium) and
+it will track new releases automatically.
 
-*   **Android Version**: Android 5.0 (API 21) or higher.
-*   **RAM**: 2GB minimum recommended.
-*   **Architecture**: ARMv7a, ARM64-v8a, x86.
+Android's Play Protect flags app-cloning engines as a category. You will likely have
+to tap **More details → Install anyway**.
 
-## Build Instructions
+## Setup after install
 
-### Prerequisites
-*   Android Studio (Arctic Fox or newer)
-*   JDK 17
-*   Android SDK 34+
-*   NDK (Version 29.0.13846066)
-
-### Building from Source
-
-```bash
-# Clone the repository
-git clone https://github.com/your-repo/NewBlackbox.git
-cd NewBlackbox
-
-# Build Debug APK
-./gradlew assembleDebug
-
-# Build Release APK
-./gradlew assembleRelease
-```
-
-## Integration
-
-To use BlackBox Core in your own project, add the AAR dependency:
-
-```gradle
-dependencies {
-    implementation fileTree(dir: "libs", include: ["*.aar"])
-}
-```
-
-Refer to `Docs.md` for detailed API documentation.
-
-## Troubleshooting
-
-*   **App Crashes**: Check logcat for UID mismatches or permission errors.
-*   **Installation Failures**: Verify potential architecture mismatches or storage permissions.
-*   **Android 15**: Ensure you are using the latest build which handles stricter security policies.
+1. Grant **All files access** when prompted. Cloned apps cannot write their data
+   without it, and large downloads inside clones will fail.
+2. Tap **+** to clone an app. Swipe sideways to reach another space and clone the
+   same app again for a second independent copy.
+3. For apps needing Google sign-in: **⋮ → Setting → Others → GMS Manager**, then
+   install Google services into that space.
 
 ## Credits
 
-*   **Main Developer**: ALEX502
-*   **Original Framework**: VirtualApp, VirtualAPK
-*   **Native Hooks**: Dobby, xDL
-*   **Reflection**: BlackReflection, FreeReflection
+MaxCloner is a fork of [ALEX5402/NewBlackbox](https://github.com/ALEX5402/NewBlackbox),
+a maintained continuation of the BlackBox virtual engine. All of the hard
+virtualization work belongs to those projects.
 
-## License
+Licensed under the Apache License 2.0 — see [LICENSE](LICENSE). Modifications made by
+this fork are listed in [NOTICE](NOTICE) and explained in [MAXCLONER.md](MAXCLONER.md).
 
-Copyright 2022 BlackBox
+## What this fork changes
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+The upstream engine is already free and ungated — there was no paywall to remove. The
+substantive change is **split APK (Android App Bundle) support**:
 
-   http://www.apache.org/licenses/LICENSE-2.0
+Modern Play Store apps ship as a base APK plus separate split APKs, and for a bundle
+app the base APK contains **no native code at all** — every `.so` lives in
+`split_config.<abi>.apk`. Upstream cloned only the base APK, so cloned bundle apps
+received zero native libraries and no split resources. This fork installs every split
+and extracts native libraries from all of them.
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Everything else is rebranding. Details in [MAXCLONER.md](MAXCLONER.md).
+
+## Building
+
+Requires **JDK 21** (not 17, despite what upstream docs say — the build targets Java 21),
+Android SDK 35, and NDK `29.0.13846066`.
+
+```bash
+./gradlew assembleDebug
+```
+
+Release builds read signing credentials from `keystore.properties` (gitignored); without
+it they fall back to the debug key so a fresh clone still builds. CI builds are signed
+from repository secrets — see [.github/workflows/release.yml](.github/workflows/release.yml).
+
+## Known limitations
+
+These are properties of userspace virtualization, not bugs in this fork, and they affect
+commercial cloners equally:
+
+- Apps enforcing Play Integrity / SafetyNet — banking, payments, some messaging — detect
+  the sandbox and refuse to run. No userspace engine reliably defeats this.
+- Google sign-in inside a clone often fails even with GMS installed, because Google
+  validates the calling app's signature and device integrity.
+- Android 15 support is recent and not thoroughly tested; individual apps may crash.
+- `targetSdkVersion` is pinned to 28 so the engine can reach the hidden APIs it needs.
+  Raising it breaks the engine, and it also means this cannot be published on Google
+  Play. Sideload only.
+
+## Warning
+
+Cloned apps run inside MaxCloner's sandbox, so the host can observe what they do. Do not
+put banking, payment, or primary email accounts inside it. Services such as WhatsApp and
+Snapchat can suspend accounts used in cloned environments — test with an account you can
+afford to lose. Uninstalling MaxCloner deletes every clone and all data inside them.

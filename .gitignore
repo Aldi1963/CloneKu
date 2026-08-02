@@ -22,3 +22,9 @@
 .cxx
 local.properties
 /app/release/
+
+## Signing credentials - never commit these
+keystore.properties
+*.jks
+*.keystore
+KEYSTORE-PASSWORD.txt
