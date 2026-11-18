@@ -1,5 +1,5 @@
-MaxCloner
-Copyright 2026 The MaxCloner project
+CloneKu
+Copyright 2026 The CloneKu project
 
 This product includes software developed by the NewBlackbox project
 (https://github.com/ALEX5402/NewBlackbox), which is itself derived from the
@@ -15,7 +15,7 @@ MODIFICATIONS
 ---------------------------------------------------------------------------
 
 In accordance with Section 4(b) of the Apache License 2.0, the following
-files have been modified by the MaxCloner project relative to upstream:
+files have been modified by the CloneKu project relative to upstream:
 
   Bcore/src/main/cpp/Utils/AntiDetection.cpp
       Added the rebranded host package data directory to the list of paths

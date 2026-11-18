@@ -8,6 +8,7 @@
     -->
 
     <!-- Base surfaces -->
+    <color name="cloneku_navy">#243370</color>
     <color name="zenith_obsidian">#0A0C10</color>
     <color name="zenith_surface">#111318</color>
     <color name="zenith_surface_container_lowest">#0C0E12</color>

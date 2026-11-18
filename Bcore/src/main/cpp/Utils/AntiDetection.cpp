@@ -55,6 +55,7 @@ static const char* blocked_files[] = {
     "/data/data/com.ludashi.superboost",
     "/data/data/top.niunaijun.blackboxa",
     "/data/data/com.maxcloner.app",
+    "/data/data/id.clipku.cloner",
     "/blackbox",
     "/virtual",
     

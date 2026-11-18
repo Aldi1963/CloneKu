@@ -1,4 +1,4 @@
-# MaxCloner
+# CloneKu
 
 Run multiple independent copies of the same Android app on one device, without root.
 
@@ -8,9 +8,9 @@ Free and unrestricted: **no ads, no subscription, no limit on the number of clon
 
 Grab the latest APK from [Releases](../../releases).
 
-- **`MaxCloner_*_arm64-v8a-release.apk`** — use this on virtually any modern phone.
-- `MaxCloner_*_universal-release.apk` — fallback if the above refuses to install.
-- `MaxCloner_*_armeabi-v7a-release.apk` — very old 32-bit devices only.
+- **`CloneKu_*_arm64-v8a-release.apk`** — use this on virtually any modern phone.
+- `CloneKu_*_universal-release.apk` — fallback if the above refuses to install.
+- `CloneKu_*_armeabi-v7a-release.apk` — very old 32-bit devices only.
 
 ### Automatic updates via Obtainium
 
@@ -31,7 +31,7 @@ to tap **More details → Install anyway**.
 
 ## Credits
 
-MaxCloner is a fork of [ALEX5402/NewBlackbox](https://github.com/ALEX5402/NewBlackbox),
+CloneKu is a fork of [ALEX5402/NewBlackbox](https://github.com/ALEX5402/NewBlackbox),
 a maintained continuation of the BlackBox virtual engine. All of the hard
 virtualization work belongs to those projects.
 
@@ -80,7 +80,7 @@ commercial cloners equally:
 
 ## Warning
 
-Cloned apps run inside MaxCloner's sandbox, so the host can observe what they do. Do not
+Cloned apps run inside CloneKu's sandbox, so the host can observe what they do. Do not
 put banking, payment, or primary email accounts inside it. Services such as WhatsApp and
 Snapchat can suspend accounts used in cloned environments — test with an account you can
-afford to lose. Uninstalling MaxCloner deletes every clone and all data inside them.
+afford to lose. Uninstalling CloneKu deletes every clone and all data inside them.

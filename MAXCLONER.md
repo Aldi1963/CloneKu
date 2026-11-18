@@ -1,4 +1,4 @@
-# MaxCloner
+# CloneKu
 
 An Android app-cloning / multi-space app. Runs multiple independent copies of the
 same app on one device, sandboxed in a virtual container, without root.
@@ -34,9 +34,9 @@ Google Play in-app billing keep working inside the sandbox. Leave it.
 
 | File | Change |
 |---|---|
-| `app/build.gradle` | `applicationId` → `com.maxcloner.app`; APK output name → `MaxCloner_*.apk` |
-| `app/src/main/res/values/strings.xml` | `app_name` → MaxCloner |
-| `Bcore/src/main/cpp/Utils/AntiDetection.cpp` | added `/data/data/com.maxcloner.app` to the hidden-paths list |
+| `app/build.gradle` | `applicationId` → `id.clipku.cloner`; APK output name → `CloneKu_*.apk` |
+| `app/src/main/res/values/strings.xml` | `app_name` → CloneKu |
+| `Bcore/src/main/cpp/Utils/AntiDetection.cpp` | added `/data/data/id.clipku.cloner` to the hidden-paths list |
 | `gradle.properties` | Gradle JVM heap 2048m → 4096m |
 
 ### Split APK (App Bundle) support
@@ -73,8 +73,8 @@ they must be deleted and re-cloned.
 That file holds a blocklist of filesystem paths hidden from apps running inside the
 sandbox, so they cannot detect that they are being virtualised. It hardcoded the
 *upstream* host package's data directory. Renaming the app without adding the new
-data directory would leave `/data/data/com.maxcloner.app` visible to every cloned
-app, making MaxCloner trivially detectable.
+data directory would leave `/data/data/id.clipku.cloner` visible to every cloned
+app, making CloneKu trivially detectable.
 
 ### What must NOT be renamed
 
@@ -129,7 +129,7 @@ If `keystore.properties` is absent the build falls back to the debug key rather
 than failing, so a fresh clone still builds.
 
 **Back up the keystore.** Android identifies an app by its signing key. Lose it and
-you can never update an installed MaxCloner — users would have to uninstall, losing
+you can never update an installed CloneKu — users would have to uninstall, losing
 every clone and all data inside it.
 
 ## Environment gotchas on this machine

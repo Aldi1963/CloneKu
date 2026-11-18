@@ -26,7 +26,7 @@ android {
     compileSdk rootProject.ext.compileSdkVersion
     ndkVersion = "29.0.13846066"
     defaultConfig {
-        applicationId "com.maxcloner.app"
+        applicationId "id.clipku.cloner"
         minSdk rootProject.ext.minSdk
         targetSdk rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
@@ -72,7 +72,7 @@ android {
     }
     applicationVariants.configureEach { variant ->
         variant.outputs.configureEach { output ->
-            output.outputFileName = "MaxCloner_${variant.versionName}_${output.baseName}.apk"
+            output.outputFileName = "CloneKu_${variant.versionName}_${output.baseName}.apk"
         }
     }
 }
