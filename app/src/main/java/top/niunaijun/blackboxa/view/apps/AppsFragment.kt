@@ -104,7 +104,8 @@ class AppsFragment : Fragment() {
         try {
             // Layar kosong kustom (fix 1.0.1): petunjuk migrasi dari
             // MaxCloner + cara clone pertama, bukan sekadar "No data!".
-            viewBinding.stateView.setEmptyResource(R.layout.state_empty_cloneku)
+            // (StateView ditulis di Kotlin: pakai sintaks properti.)
+            viewBinding.stateView.emptyResource = R.layout.state_empty_cloneku
             viewBinding.stateView.showEmpty()
 
             mAdapter =
