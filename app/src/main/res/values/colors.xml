@@ -40,6 +40,9 @@
     <color name="cloneku_danger">#FF2D55</color>
     <color name="cloneku_on_danger">#690005</color>
 
+    <!-- Warning label (risk badge di daftar aplikasi) — kuning gelap, terbaca di tema gelap maupun terang -->
+    <color name="warning_text">#E8A100</color>
+
     <!--
       Legacy aliases. Layouts inherited from upstream still reference these
       names; remapping them onto the CloneKu palette avoids touching every

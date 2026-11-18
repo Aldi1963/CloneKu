@@ -12,6 +12,7 @@ import top.niunaijun.blackboxa.R
 import top.niunaijun.blackboxa.app.AppManager
 import top.niunaijun.blackboxa.bean.AppInfo
 import top.niunaijun.blackboxa.bean.InstalledAppBean
+import top.niunaijun.blackboxa.util.CloneRisk
 import top.niunaijun.blackboxa.util.MemoryManager
 import top.niunaijun.blackboxa.util.getString
 
@@ -145,10 +146,15 @@ class AppsRepository {
                         mInstalledList.map {
                             InstalledAppBean(
                                     it.name,
-                                    it.icon, 
+                                    it.icon,
                                     it.packageName,
                                     it.sourceDir,
-                                    blackBoxCore.isInstalled(it.packageName, userID)
+                                    blackBoxCore.isInstalled(it.packageName, userID),
+                                    // Heuristik risiko clone (item 3): daftar kurasi
+                                    // paket banking/pembayaran + kata kunci nama paket
+                                    // (ApplicationInfo.category tidak punya kategori
+                                    // Finance — lihat CloneRisk), dan daftar aplikasi pesan.
+                                    CloneRisk.assess(it.packageName)
                             )
                         }
                 appsLiveData.postValue(newInstalledList)

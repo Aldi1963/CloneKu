@@ -7,6 +7,7 @@ import cbfg.rvadapter.RVHolderFactory
 import top.niunaijun.blackboxa.R
 import top.niunaijun.blackboxa.bean.InstalledAppBean
 import top.niunaijun.blackboxa.databinding.ItemPackageBinding
+import top.niunaijun.blackboxa.util.CloneRisk
 
 
 
@@ -27,6 +28,25 @@ class ListAdapter : RVHolderFactory() {
                 View.VISIBLE
             } else {
                 View.GONE
+            }
+            // Label risiko clone (item 3 + item 7): hanya heuristik, teksnya
+            // sengaja memakai "kemungkinan"/"risiko", bukan kepastian.
+            when (item.risk) {
+                CloneRisk.Risk.PAYMENT -> {
+                    binding.riskLabel.visibility = View.VISIBLE
+                    binding.riskLabel.setText(R.string.clone_risk_payment_label)
+                }
+                CloneRisk.Risk.MESSAGING -> {
+                    binding.riskLabel.visibility = View.VISIBLE
+                    binding.riskLabel.setText(R.string.clone_risk_messaging_label)
+                }
+                CloneRisk.Risk.BOTH -> {
+                    binding.riskLabel.visibility = View.VISIBLE
+                    binding.riskLabel.setText(R.string.clone_risk_both_label)
+                }
+                CloneRisk.Risk.NONE -> {
+                    binding.riskLabel.visibility = View.GONE
+                }
             }
         }
     }

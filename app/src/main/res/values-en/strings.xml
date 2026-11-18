@@ -90,4 +90,45 @@
     <string name="space_icon_game">Games</string>
     <string name="space_icon_social">Social</string>
     <string name="space_icon_media">Media</string>
+
+<!-- Trek B: clone risk warnings (item 3 + item 7). Wording is deliberately
+         uncertain ("may"/"risk") — never a certainty for an untested app. -->
+    <string name="clone_risk_payment_label">May be rejected — Play Integrity check</string>
+    <string name="clone_risk_messaging_label">Account suspension risk</string>
+    <string name="clone_risk_both_label">May be rejected • Suspension risk</string>
+    <string name="clone_risk_payment_title">Banking / payment app</string>
+    <string name="clone_risk_messaging_title">Messaging app</string>
+    <string name="clone_risk_whatsapp_title">Clone WhatsApp?</string>
+    <string name="clone_risk_both_title">Clone this app?</string>
+    <string name="clone_risk_payment_message">%1$s is a banking or payment app. Such apps often check Play Integrity / device integrity and may refuse to run inside a cloned environment. This is only a possibility — CloneKu has not tested this exact app, and it may work fine. If it refuses to log in or shows a security error, there is usually no fix from CloneKu\'s side.</string>
+    <string name="clone_risk_whatsapp_message">WhatsApp accounts running in a cloned environment risk being suspended by WhatsApp. Do not use your primary number for a cloned WhatsApp if losing that account would be a problem. Use it at your own risk.</string>
+    <string name="clone_risk_messaging_message">%1$s is a messaging app. Accounts running in a cloned environment risk being suspended by the service provider. Use it at your own risk.</string>
+    <string name="clone_risk_continue">Clone anyway</string>
+
+    <!-- Trek B: per-clone backup & restore (item 4) -->
+    <string name="app_backup">Back up data</string>
+    <string name="app_restore">Restore data</string>
+    <string name="backup_exporting">Backing up data…</string>
+    <string name="backup_importing">Restoring data…</string>
+    <string name="backup_export_success">Backup saved. Keep this file — uninstalling CloneKu deletes all clone data.</string>
+    <string name="backup_export_failed">Backup failed: %1$s</string>
+    <string name="backup_restore_success">Data restored. Open %1$s to check it.</string>
+    <string name="backup_restore_failed">Restore failed: %1$s</string>
+    <string name="backup_not_installed">This app is not installed in this space yet. Install it first, then restore its data.</string>
+    <string name="backup_no_data">This clone has no data to back up yet.</string>
+    <string name="backup_invalid_file">This is not a CloneKu backup file.</string>
+    <string name="backup_mismatch">This backup belongs to a different app or space. Restore only works for the same app in the same space.</string>
+    <string name="backup_open_failed">Could not open the selected file.</string>
+    <string name="backup_uninstall_reminder">Tip: back up this clone\'s data first — uninstalling deletes its data.</string>
+
+    <!-- Trek B: in-app update check (item 8) -->
+    <string name="check_update">Check for update</string>
+    <string name="check_update_summary">Check whether a newer CloneKu version is available</string>
+    <string name="update_checking">Checking for update…</string>
+    <string name="update_not_configured">Update check is not configured yet. The CloneKu release repository does not exist yet, so there is no update server to check. You can still update via Obtainium.</string>
+    <string name="update_up_to_date">CloneKu is up to date (%1$s).</string>
+    <string name="update_available_title">Update available</string>
+    <string name="update_available_message">CloneKu %1$s is available (you have %2$s).</string>
+    <string name="update_download">Download</string>
+    <string name="update_check_failed">Could not check for update: %1$s</string>
 </resources>
