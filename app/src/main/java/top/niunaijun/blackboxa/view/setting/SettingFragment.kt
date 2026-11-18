@@ -1,11 +1,15 @@
 package top.niunaijun.blackboxa.view.setting
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.afollestad.materialdialogs.MaterialDialog
 import top.niunaijun.blackbox.BlackBoxCore
 import top.niunaijun.blackboxa.R
 import top.niunaijun.blackboxa.app.AppManager
+import top.niunaijun.blackboxa.util.UpdateChecker
 import top.niunaijun.blackboxa.util.toast
 import top.niunaijun.blackboxa.view.gms.GmsManagerActivity
 
@@ -15,6 +19,8 @@ class SettingFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.setting, rootKey)
 
         initGms()
+
+        initCheckUpdate()
 
         invalidHideState {
             val rootHidePreference: Preference = (findPreference("root_hide")!!)
@@ -45,6 +51,68 @@ class SettingFragment : PreferenceFragmentCompat() {
         }
 
         initSendLogs()
+    }
+
+    /**
+     * Pemeriksa update di dalam aplikasi (item 8). Selama
+     * [UpdateChecker.UPDATE_CHECK_URL] masih kosong (belum ada repo rilis),
+     * pengguna mendapat pesan jujur "belum dikonfigurasi", bukan error.
+     */
+    private fun initCheckUpdate() {
+        val checkUpdatePreference: Preference? = findPreference("check_update")
+        checkUpdatePreference?.setOnPreferenceClickListener {
+            toast(R.string.update_checking)
+            UpdateChecker.check { result ->
+                val ctx = context ?: return@check
+                when (result) {
+                    is UpdateChecker.Result.NotConfigured -> {
+                        MaterialDialog(ctx).show {
+                            title(R.string.check_update)
+                            message(R.string.update_not_configured)
+                            positiveButton(R.string.done)
+                        }
+                    }
+                    is UpdateChecker.Result.UpToDate -> {
+                        toast(getString(R.string.update_up_to_date, result.versionName))
+                    }
+                    is UpdateChecker.Result.Available -> {
+                        val message =
+                                getString(
+                                        R.string.update_available_message,
+                                        result.versionName,
+                                        UpdateChecker.currentVersionName()
+                                ) + if (result.changelog.isNotBlank()) {
+                                    "\n\n${result.changelog}"
+                                } else {
+                                    ""
+                                }
+                        MaterialDialog(ctx).show {
+                            title(R.string.update_available_title)
+                            message(text = message)
+                            if (result.downloadUrl.isNotBlank()) {
+                                positiveButton(R.string.update_download) {
+                                    runCatching {
+                                        startActivity(
+                                                Intent(
+                                                        Intent.ACTION_VIEW,
+                                                        Uri.parse(result.downloadUrl)
+                                                )
+                                        )
+                                    }
+                                }
+                                negativeButton(R.string.cancel)
+                            } else {
+                                positiveButton(R.string.done)
+                            }
+                        }
+                    }
+                    is UpdateChecker.Result.Error -> {
+                        toast(getString(R.string.update_check_failed, result.message))
+                    }
+                }
+            }
+            true
+        }
     }
 
     private fun initGms() {

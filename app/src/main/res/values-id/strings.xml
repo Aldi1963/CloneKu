@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Terjemahan Bahasa Indonesia untuk string baru Trek B (item 3, 4, 7, 8).
+         String lama yang belum diterjemahkan tetap memakai values/strings.xml. -->
+
+    <!-- Peringatan risiko clone (item 3 + item 7). Rumusan sengaja tidak
+         pasti ("kemungkinan"/"risiko") — bukan kepastian untuk aplikasi
+         yang belum diuji. -->
+    <string name="clone_risk_payment_label">Kemungkinan ditolak — cek Play Integrity</string>
+    <string name="clone_risk_messaging_label">Risiko akun ditangguhkan</string>
+    <string name="clone_risk_both_label">Kemungkinan ditolak • Risiko ditangguhkan</string>
+    <string name="clone_risk_payment_title">Aplikasi bank / pembayaran</string>
+    <string name="clone_risk_messaging_title">Aplikasi pesan</string>
+    <string name="clone_risk_whatsapp_title">Clone WhatsApp?</string>
+    <string name="clone_risk_both_title">Clone aplikasi ini?</string>
+    <string name="clone_risk_payment_message">%1$s adalah aplikasi bank atau pembayaran. Aplikasi seperti ini sering memeriksa Play Integrity / integritas perangkat dan kemungkinan menolak berjalan di dalam clone. Ini hanya kemungkinan — CloneKu belum menguji aplikasi ini secara khusus, dan bisa saja tetap berjalan normal. Bila aplikasi menolak login atau menampilkan galat keamanan, biasanya tidak ada perbaikan dari sisi CloneKu.</string>
+    <string name="clone_risk_whatsapp_message">Akun WhatsApp yang berjalan di dalam clone berisiko ditangguhkan oleh WhatsApp. Jangan pakai nomor utama Anda untuk WhatsApp hasil clone bila kehilangan akun itu akan bermasalah. Gunakan dengan risiko sendiri.</string>
+    <string name="clone_risk_messaging_message">%1$s adalah aplikasi pesan. Akun yang berjalan di dalam clone berisiko ditangguhkan oleh penyedia layanan. Gunakan dengan risiko sendiri.</string>
+    <string name="clone_risk_continue">Tetap clone</string>
+
+    <!-- Backup &amp; restore data clone (item 4) -->
+    <string name="app_backup">Cadangkan data</string>
+    <string name="app_restore">Pulihkan data</string>
+    <string name="backup_exporting">Mencadangkan data…</string>
+    <string name="backup_importing">Memulihkan data…</string>
+    <string name="backup_export_success">Cadangan tersimpan. Simpan file ini — uninstall CloneKu akan menghapus semua data clone.</string>
+    <string name="backup_export_failed">Cadangan gagal: %1$s</string>
+    <string name="backup_restore_success">Data dipulihkan. Buka %1$s untuk memeriksanya.</string>
+    <string name="backup_restore_failed">Pemulihan gagal: %1$s</string>
+    <string name="backup_not_installed">Aplikasi ini belum terpasang di ruang ini. Pasang dulu aplikasinya, baru pulihkan datanya.</string>
+    <string name="backup_no_data">Clone ini belum punya data untuk dicadangkan.</string>
+    <string name="backup_invalid_file">File ini bukan cadangan CloneKu.</string>
+    <string name="backup_mismatch">Cadangan ini milik aplikasi atau ruang lain. Pemulihan hanya berlaku untuk aplikasi yang sama di ruang yang sama.</string>
+    <string name="backup_open_failed">Tidak bisa membuka file yang dipilih.</string>
+    <string name="backup_uninstall_reminder">Tips: cadangkan dulu data clone ini — uninstall akan menghapus datanya.</string>
+
+    <!-- Periksa update di dalam aplikasi (item 8) -->
+    <string name="check_update">Periksa update</string>
+    <string name="check_update_summary">Periksa apakah ada versi CloneKu yang lebih baru</string>
+    <string name="update_checking">Memeriksa update…</string>
+    <string name="update_not_configured">Pemeriksaan update belum dikonfigurasi. Repo rilis CloneKu belum ada, jadi belum ada server update yang bisa diperiksa. Anda tetap bisa update lewat Obtainium.</string>
+    <string name="update_up_to_date">CloneKu sudah versi terbaru (%1$s).</string>
+    <string name="update_available_title">Update tersedia</string>
+    <string name="update_available_message">CloneKu %1$s tersedia (saat ini %2$s).</string>
+    <string name="update_download">Unduh</string>
+    <string name="update_check_failed">Gagal memeriksa update: %1$s</string>
+</resources>

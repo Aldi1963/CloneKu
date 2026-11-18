@@ -11,6 +11,11 @@
                 android:title="@string/gms_manager"
                 android:summary="@string/jump_gms"/>
 
+        <Preference
+                android:key="check_update"
+                android:title="@string/check_update"
+                android:summary="@string/check_update_summary"/>
+
 
 
         <SwitchPreferenceCompat

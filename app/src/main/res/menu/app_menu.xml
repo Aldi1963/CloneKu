@@ -3,6 +3,10 @@
 
     <item android:id="@+id/app_clear" android:title="@string/app_clear"/>
 
+    <item android:id="@+id/app_backup" android:title="@string/app_backup"/>
+
+    <item android:id="@+id/app_restore" android:title="@string/app_restore"/>
+
     <item android:id="@+id/app_stop" android:title="@string/app_stop"/>
 
     <item android:id="@+id/app_remove" android:title="@string/app_remove"/>

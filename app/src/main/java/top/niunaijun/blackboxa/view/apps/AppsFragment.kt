@@ -1,6 +1,7 @@
 package top.niunaijun.blackboxa.view.apps
 
 import android.graphics.Point
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -21,6 +23,7 @@ import top.niunaijun.blackbox.BlackBoxCore
 import top.niunaijun.blackboxa.R
 import top.niunaijun.blackboxa.bean.AppInfo
 import top.niunaijun.blackboxa.databinding.FragmentAppsBinding
+import top.niunaijun.blackboxa.util.CloneBackupManager
 import top.niunaijun.blackboxa.util.InjectionUtil
 import top.niunaijun.blackboxa.util.ShortcutUtil
 import top.niunaijun.blackboxa.util.inflate
@@ -44,6 +47,32 @@ class AppsFragment : Fragment() {
     private val viewBinding: FragmentAppsBinding by inflate()
 
     private var popupMenu: PopupMenu? = null
+
+    /** Clone yang sedang menunggu dipilihnya file backup/restore (SAF). */
+    private var pendingBackupApp: AppInfo? = null
+
+    /**
+     * SAF: pilih lokasi simpan arsip backup (item 4). MIME application/zip;
+     * beberapa file manager melaporkan ZIP sebagai octet-stream saat dibuka
+     * kembali, jadi impor menerima keduanya.
+     */
+    private val exportBackupLauncher =
+            registerForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri: Uri? ->
+                val app = pendingBackupApp
+                pendingBackupApp = null
+                if (uri != null && app != null) {
+                    runBackupExport(app, uri)
+                }
+            }
+
+    private val importBackupLauncher =
+            registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
+                val app = pendingBackupApp
+                pendingBackupApp = null
+                if (uri != null && app != null) {
+                    runBackupImport(app, uri)
+                }
+            }
 
     companion object {
         private const val TAG = "AppsFragment"
@@ -352,6 +381,14 @@ class AppsFragment : Fragment() {
                                         clearApk(data)
                                     }
 
+                                    R.id.app_backup -> {
+                                        startBackupExport(data)
+                                    }
+
+                                    R.id.app_restore -> {
+                                        startBackupImport(data)
+                                    }
+
                                     R.id.app_stop -> {
                                         stopApk(data)
                                     }
@@ -450,7 +487,11 @@ class AppsFragment : Fragment() {
         try {
             MaterialDialog(requireContext()).show {
                 title(R.string.uninstall_app)
-                message(text = getString(R.string.uninstall_app_hint, info.name))
+                // Ingatkan soal backup: uninstall menghapus data clone (item 4).
+                message(
+                        text = getString(R.string.uninstall_app_hint, info.name) +
+                                "\n\n" + getString(R.string.backup_uninstall_reminder)
+                )
                 positiveButton(R.string.done) {
                     try {
                         showLoading()
@@ -517,6 +558,113 @@ class AppsFragment : Fragment() {
         } catch (e: Exception) {
             Log.e(TAG, "Error installing APK: ${e.message}")
             hideLoading()
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Backup & restore data clone (item 4)
+    // ------------------------------------------------------------------
+
+    private fun startBackupExport(info: AppInfo) {
+        try {
+            pendingBackupApp = info
+            exportBackupLauncher.launch(CloneBackupManager.suggestFileName(info.packageName))
+        } catch (e: Exception) {
+            Log.e(TAG, "Error starting backup export: ${e.message}")
+            pendingBackupApp = null
+        }
+    }
+
+    private fun startBackupImport(info: AppInfo) {
+        try {
+            pendingBackupApp = info
+            importBackupLauncher.launch(arrayOf("application/zip", "application/octet-stream"))
+        } catch (e: Exception) {
+            Log.e(TAG, "Error starting backup import: ${e.message}")
+            pendingBackupApp = null
+        }
+    }
+
+    private fun runBackupExport(info: AppInfo, uri: Uri) {
+        try {
+            showLoading()
+            toast(R.string.backup_exporting)
+            CloneBackupManager.exportBackup(
+                    requireContext(),
+                    info.packageName,
+                    userID,
+                    uri,
+                    object : CloneBackupManager.Callback {
+                        override fun onSuccess(message: String) {
+                            hideLoading()
+                            toast(R.string.backup_export_success)
+                        }
+
+                        override fun onError(message: String) {
+                            hideLoading()
+                            toast(backupErrorText(message, isExport = true))
+                        }
+                    }
+            )
+        } catch (e: Exception) {
+            Log.e(TAG, "Error exporting backup: ${e.message}")
+            hideLoading()
+        }
+    }
+
+    private fun runBackupImport(info: AppInfo, uri: Uri) {
+        try {
+            showLoading()
+            toast(R.string.backup_importing)
+            CloneBackupManager.importBackup(
+                    requireContext(),
+                    info.packageName,
+                    userID,
+                    uri,
+                    object : CloneBackupManager.Callback {
+                        override fun onSuccess(message: String) {
+                            hideLoading()
+                            toast(getString(R.string.backup_restore_success, info.name))
+                        }
+
+                        override fun onError(message: String) {
+                            hideLoading()
+                            toast(backupErrorText(message, isExport = false))
+                        }
+                    }
+            )
+        } catch (e: Exception) {
+            Log.e(TAG, "Error importing backup: ${e.message}")
+            hideLoading()
+        }
+    }
+
+    /**
+     * Terjemahkan kode error dari [CloneBackupManager] ke pesan untuk pengguna.
+     * Kode berbentuk "kode" atau "kode: detail" (detail hanya untuk log, dan
+     * untuk pesan gagal umum yang menyertakan pesan exception).
+     */
+    private fun backupErrorText(message: String, isExport: Boolean): String {
+        val parts = message.split(":", limit = 2)
+        return when (parts[0]) {
+            "not_installed" -> getString(R.string.backup_not_installed)
+            "no_data" -> getString(R.string.backup_no_data)
+            "invalid_file" -> getString(R.string.backup_invalid_file)
+            "mismatch" -> getString(R.string.backup_mismatch)
+            "open_failed" -> getString(R.string.backup_open_failed)
+            "export_failed" -> getString(
+                    R.string.backup_export_failed,
+                    parts.getOrNull(1)?.trim().orEmpty()
+            )
+            "import_failed" -> getString(
+                    R.string.backup_restore_failed,
+                    parts.getOrNull(1)?.trim().orEmpty()
+            )
+            else -> if (isExport) {
+                getString(R.string.backup_export_failed, message)
+            } else {
+                getString(R.string.backup_restore_failed, message)
+            }
         }
     }
 
