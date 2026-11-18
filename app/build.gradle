@@ -3,10 +3,18 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
 }
 
-def keystorePropertiesFile = rootProject.file("keystore.properties")
+// Release signing credentials live OUTSIDE the repo, in
+// /home/hatch/workspace/maxcloner-build/keystore.properties (never committed).
+// Path absolut literal (bukan user.home): daemon Gradle berjalan sebagai root
+// sehingga user.home = /root, bukan /home/hatch.
+// If the file is absent, release builds fall back to debug signing with a
+// warning, so other tracks / CI without the keystore keep working.
+def keystorePropertiesFile = file("/home/hatch/workspace/maxcloner-build/keystore.properties")
 def keystoreProperties = new Properties()
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+} else {
+    logger.warn("CloneKu: keystore.properties not found at ${keystorePropertiesFile}; release build will use DEBUG signing.")
 }
 
 android {
