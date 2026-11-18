@@ -128,9 +128,10 @@ device, or the universal one if unsure.
 
 ## Signing
 
-Release builds are signed with `maxcloner-release.jks` (4096-bit RSA, valid ~30
-years), located one directory above the repo. Credentials live in
-`keystore.properties`, which is gitignored along with `*.jks`.
+Release builds are signed with `cloneku-release.keystore` (RSA 2048, alias
+`cloneku`, valid 18 Nov 2026 – 12 Nov 2051), located in
+`~/workspace/maxcloner-build/` (outside the repo). Credentials live in
+`keystore.properties` in the same directory, which is never committed.
 
 If `keystore.properties` is absent the build falls back to the debug key rather
 than failing, so a fresh clone still builds.
