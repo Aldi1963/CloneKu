@@ -68,7 +68,7 @@ class AppsAdapter : RVHolderFactory() {
                 setIconSafely(item.icon, item.packageName)
                 
                 
-                binding.name.text = item.name ?: "Unknown App"
+                binding.name.text = item.name ?: itemView.context.getString(R.string.unknown_app)
                 
                 
                 if (item.isXpModule) {
@@ -140,7 +140,7 @@ class AppsAdapter : RVHolderFactory() {
         private fun setSafeDefaults() {
             try {
                 binding.icon.setImageDrawable(createDefaultIcon())
-                binding.name.text = "Unknown App"
+                binding.name.text = itemView.context.getString(R.string.unknown_app)
                 binding.cornerLabel.visibility = View.INVISIBLE
             } catch (e: Exception) {
                 Log.e(TAG, "Error setting safe defaults: ${e.message}")
@@ -156,7 +156,7 @@ class AppsAdapter : RVHolderFactory() {
             try {
                 
                 binding.icon.setImageDrawable(ColorDrawable(DEFAULT_ICON_COLOR))
-                binding.name.text = item.name ?: "Unknown App"
+                binding.name.text = item.name ?: itemView.context.getString(R.string.unknown_app)
                 binding.cornerLabel.visibility = View.INVISIBLE
             } catch (e: Exception) {
                 Log.e(TAG, "Error in fallback ViewHolder: ${e.message}")

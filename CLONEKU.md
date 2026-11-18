@@ -12,7 +12,7 @@ This is a fork of [ALEX5402/NewBlackbox](https://github.com/ALEX5402/NewBlackbox
 FBlackBox/BlackBox virtual-engine project.
 
 - `main` branch — pristine upstream, never modified. Pull upstream fixes here.
-- `maxcloner` branch — this fork's changes. Rebase onto `main` after pulling.
+- `rebrand-cloneku` branch — this fork's changes (CloneKu rebrand). Rebase onto `main` after pulling.
 
 ## Why there is no paywall to remove
 
@@ -37,6 +37,13 @@ Google Play in-app billing keep working inside the sandbox. Leave it.
 | `app/build.gradle` | `applicationId` → `id.clipku.cloner`; APK output name → `CloneKu_*.apk` |
 | `app/src/main/res/values/strings.xml` | `app_name` → CloneKu |
 | `Bcore/src/main/cpp/Utils/AntiDetection.cpp` | added `/data/data/id.clipku.cloner` to the hidden-paths list |
+| `app/src/main/res/values/strings.xml` | full Indonesian (default locale) |
+| `app/src/main/res/values-id/strings.xml` | full Indonesian translation |
+| `app/src/main/res/values-en/strings.xml` | English kept for the `en` locale |
+| `app/src/main/res/values/colors.xml`, `themes.xml` | Zenith obsidian + cyan theme → flat Clipku navy `#243370`, no gradients |
+| `app/src/main/res/drawable/cloneku_*.xml` | flat navy drawables replace the Zenith gradient ones |
+| `app/src/main/java/.../view/main/MainActivity.kt` | clone space name ("Space 1", "Space 2", … by default) + built-in icon picker per space |
+| `Bcore/src/main/cpp/Utils/AntiDetection.cpp` | removed stale `/data/data/com.maxcloner.app` from the hidden-paths list |
 | `gradle.properties` | Gradle JVM heap 2048m → 4096m |
 
 ### Split APK (App Bundle) support

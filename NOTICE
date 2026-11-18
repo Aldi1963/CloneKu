@@ -54,4 +54,4 @@ files have been modified by the CloneKu project relative to upstream:
   gradle.properties, gradle/wrapper/gradle-wrapper.properties
       Build memory, network timeout and IPv4 stack settings.
 
-Full technical rationale for each change is documented in MAXCLONER.md.
+Full technical rationale for each change is documented in CLONEKU.md.

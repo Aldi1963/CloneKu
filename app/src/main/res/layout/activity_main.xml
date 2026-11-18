@@ -4,14 +4,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/zenith_obsidian"
+        android:background="@color/cloneku_navy_deep"
         tools:context=".view.main.MainActivity">
 
     <!--
-      Animated Zenith background. Sits behind everything and is purely
+      Flat navy background. Sits behind everything and is purely
       decorative, so it is excluded from accessibility and does not take touch.
     -->
-    <top.niunaijun.blackboxa.widget.ZenithShaderView
+    <top.niunaijun.blackboxa.widget.CloneKuBackgroundView
             android:id="@+id/shaderBackground"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -52,11 +52,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:paddingBottom="12dp"
-            app:dotsColor="@color/zenith_outline_variant"
+            app:dotsColor="@color/cloneku_outline_variant"
             app:dotsCornerRadius="2dp"
             app:dotsSize="8dp"
             app:dotsSpacing="4dp"
-            app:dotsStrokeColor="@color/zenith_cyan"
+            app:dotsStrokeColor="@color/cloneku_accent"
             app:dotsWidthFactor="2.5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -72,12 +72,12 @@
             android:layout_marginBottom="24dp"
             android:contentDescription="@string/choose_app"
             android:src="@drawable/ic_add"
-            app:backgroundTint="@color/zenith_cyan"
+            app:backgroundTint="@color/cloneku_accent"
             app:borderWidth="0dp"
             app:elevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:shapeAppearanceOverlay="@style/Zenith.Fab.Chamfered"
-            app:tint="@color/zenith_on_cyan" />
+            app:shapeAppearanceOverlay="@style/CloneKu.Fab.Chamfered"
+            app:tint="@color/cloneku_on_accent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

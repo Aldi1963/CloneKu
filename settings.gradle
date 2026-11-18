@@ -23,7 +23,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "NewBlackbox"
+rootProject.name = "CloneKu"
 
 include ':app'
 include(":black-reflection")
