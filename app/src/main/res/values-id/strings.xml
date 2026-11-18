@@ -129,10 +129,21 @@
     <string name="check_update">Periksa update</string>
     <string name="check_update_summary">Periksa apakah ada versi CloneKu yang lebih baru</string>
     <string name="update_checking">Memeriksa update…</string>
-    <string name="update_not_configured">Pemeriksaan update belum dikonfigurasi. Repo rilis CloneKu belum ada, jadi belum ada server update yang bisa diperiksa. Anda tetap bisa update lewat Obtainium.</string>
+    <string name="update_not_configured">Pemeriksaan update belum bisa terhubung ke server update. Coba lagi nanti, atau update lewat Obtainium.</string>
     <string name="update_up_to_date">CloneKu sudah versi terbaru (%1$s).</string>
     <string name="update_available_title">Update tersedia</string>
     <string name="update_available_message">CloneKu %1$s tersedia (saat ini %2$s).</string>
     <string name="update_download">Unduh</string>
     <string name="update_check_failed">Gagal memeriksa update: %1$s</string>
+
+    <!-- Peringatan migrasi dari MaxCloner (fix 1.0.1) -->
+    <string name="migration_title">Clone lama tidak ikut pindah</string>
+    <string name="migration_message">CloneKu adalah aplikasi baru yang terpisah dari MaxCloner. Clone yang sudah kamu buat di MaxCloner tersimpan di data aplikasi lama dan tidak bisa dipindahkan secara otomatis — Android tidak mengizinkan satu aplikasi membaca data aplikasi lain, dan MaxCloner tidak punya fitur backup.\n\nBuat ulang clone yang kamu butuhkan di CloneKu dengan mengetuk tombol +.</string>
+    <string name="empty_title">Belum ada clone</string>
+    <string name="empty_hint">Ketuk tombol + untuk meng-clone aplikasi.\n\nClone yang kamu buat di MaxCloner tidak ikut pindah ke CloneKu — buat ulang di sini.</string>
+
+    <!-- Tur "Yang Baru di 1.0.0" (fix 1.0.1) -->
+    <string name="whats_new_title">Yang Baru di 1.0.0</string>
+    <string name="whats_new_message">CloneKu 1.0.0 membawa:\n\n• Tahan lama pada clone → Cadangkan data / Pulihkan data: simpan data clone ke file ZIP dan pulihkan lagi bila perlu.\n\n• Ketuk nama space di toolbar → ubah nama &amp; ikon space (mis. Kerja, Pribadi).\n\n• Label risiko di layar pilih aplikasi: aplikasi bank dan pembayaran yang memakai Play Integrity ditandai “Kemungkinan ditolak” sebelum di-clone.</string>
+    <string name="whats_new_summary">Lihat lagi tur fitur baru 1.0.0</string>
 </resources>

@@ -16,6 +16,11 @@
                 android:title="@string/check_update"
                 android:summary="@string/check_update_summary"/>
 
+        <Preference
+                android:key="whats_new"
+                android:title="@string/whats_new_title"
+                android:summary="@string/whats_new_summary"/>
+
 
 
         <SwitchPreferenceCompat

@@ -10,6 +10,7 @@ import top.niunaijun.blackbox.BlackBoxCore
 import top.niunaijun.blackboxa.R
 import top.niunaijun.blackboxa.app.AppManager
 import top.niunaijun.blackboxa.util.UpdateChecker
+import top.niunaijun.blackboxa.util.WhatsNewDialog
 import top.niunaijun.blackboxa.util.toast
 import top.niunaijun.blackboxa.view.gms.GmsManagerActivity
 
@@ -21,6 +22,8 @@ class SettingFragment : PreferenceFragmentCompat() {
         initGms()
 
         initCheckUpdate()
+
+        initWhatsNew()
 
         invalidHideState {
             val rootHidePreference: Preference = (findPreference("root_hide")!!)
@@ -111,6 +114,15 @@ class SettingFragment : PreferenceFragmentCompat() {
                     }
                 }
             }
+            true
+        }
+    }
+
+    /** Buka lagi tur "Yang Baru di 1.0.0" (fix 1.0.1). */
+    private fun initWhatsNew() {
+        val whatsNewPreference: Preference? = findPreference("whats_new")
+        whatsNewPreference?.setOnPreferenceClickListener {
+            WhatsNewDialog.show(requireContext())
             true
         }
     }

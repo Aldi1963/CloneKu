@@ -12,29 +12,25 @@ import top.niunaijun.blackboxa.app.App
 /**
  * Pemeriksa update di dalam aplikasi (item 8).
  *
- * CARA MENGAKTIFKAN (untuk pengelola rilis):
- * 1. Buat repo rilis CloneKu dan hosting file JSON versi di URL HTTPS
- *    yang stabil, misal:
- *    `https://<host>/cloneku/latest.json`
- * 2. Isi [UPDATE_CHECK_URL] dengan URL itu.
- * 3. Isi file JSON dengan format ini:
- *    ```json
- *    {
- *      "versionCode": 411,
- *      "versionName": "4.1.1",
- *      "downloadUrl": "https://<host>/cloneku/CloneKu_4.1.1.apk",
- *      "changelog": "Perbaikan ..."
- *    }
- *    ```
- *    `versionCode` WAJIB ada; field lain opsional (`downloadUrl` kosong
- *    berarti dialog hanya memberi tahu tanpa tombol unduh).
- * 4. Naikkan versionCode di `build.gradle` root setiap rilis — pemeriksaan
- *    membandingkan `versionCode` JSON dengan versionCode terinstall yang
- *    dibaca dari PackageManager (BuildConfig tidak digenerate proyek ini).
- *
- * SELAMA [UPDATE_CHECK_URL] MASIH KOSONG, pemeriksaan dengan jujur
- * melaporkan "belum dikonfigurasi" — JANGAN mengarang URL repo yang belum
- * ada. Obtainium tetap didukung sebagai jalur update alternatif.
+ * Endpoint JSON versi ada di repo rilis CloneKu:
+ * `https://raw.githubusercontent.com/Aldi1963/CloneKu/main/update.json`
+ * (file `update.json` di root repo). Isi file JSON:
+ * ```json
+ * {
+ *   "versionCode": 2,
+ *   "versionName": "1.0.1",
+ *   "downloadUrl": "https://github.com/Aldi1963/CloneKu/releases/download/v1.0.1/CloneKu_1.0.1_arm64-v8a-release.apk",
+ *   "changelog": "Perbaikan ..."
+ * }
+ * ```
+ * `versionCode` WAJIB ada; field lain opsional (`downloadUrl` kosong
+ * berarti dialog hanya memberi tahu tanpa tombol unduh). `downloadUrl`
+ * mengarah ke aset rilis GitHub — rilis dengan tag dan nama file APK yang
+ * sama harus dibuat di GitHub agar tautan hidup. Perbarui `update.json`
+ * setiap kali ada rilis baru, dan naikkan versionCode di `build.gradle`
+ * root — pemeriksaan membandingkan `versionCode` JSON dengan versionCode
+ * terinstall yang dibaca dari PackageManager (BuildConfig tidak digenerate
+ * proyek ini). Obtainium tetap didukung sebagai jalur update alternatif.
  *
  * Pemeriksaan hanya berjalan saat pengguna mengetuk "Periksa update" di
  * Pengaturan (tidak ada cek otomatis di latar belakang).
@@ -44,10 +40,12 @@ object UpdateChecker {
     private const val TAG = "UpdateChecker"
 
     /**
-     * Endpoint JSON versi. KOSONG = belum dikonfigurasi (belum ada repo
-     * rilis CloneKu). Isi saat repo rilis dibuat — lihat dokumentasi di atas.
+     * Endpoint JSON versi di repo rilis CloneKu
+     * (file `update.json` di root repo, dibaca lewat raw.githubusercontent).
+     * Perbarui file itu setiap rilis — lihat dokumentasi di atas.
      */
-    const val UPDATE_CHECK_URL: String = ""
+    const val UPDATE_CHECK_URL: String =
+            "https://raw.githubusercontent.com/Aldi1963/CloneKu/main/update.json"
 
     private const val CONNECT_TIMEOUT_MS = 10_000
     private const val READ_TIMEOUT_MS = 10_000

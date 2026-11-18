@@ -2,9 +2,12 @@ package top.niunaijun.blackboxa.view.main
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.net.VpnService
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -25,6 +28,7 @@ import top.niunaijun.blackboxa.app.App
 import top.niunaijun.blackboxa.app.AppManager
 import top.niunaijun.blackboxa.databinding.ActivityMainBinding
 import top.niunaijun.blackboxa.util.Resolution
+import top.niunaijun.blackboxa.util.WhatsNewDialog
 import top.niunaijun.blackboxa.util.inflate
 import top.niunaijun.blackboxa.view.apps.AppsFragment
 import top.niunaijun.blackboxa.view.base.LoadingActivity
@@ -46,6 +50,13 @@ class MainActivity : LoadingActivity() {
         private const val TAG = "MainActivity"
         private const val STORAGE_PERMISSION_REQUEST_CODE = 1001
         private const val VPN_PERMISSION_REQUEST_CODE = 1002
+
+        /** Paket aplikasi cloner lama (MaxCloner). */
+        private const val OLD_CLONER_PACKAGE = "com.maxcloner.app"
+
+        /** Flag sekali-tampil di SharedPreferences "UserRemark". */
+        private const val PREF_MIGRATION_WARNING_SHOWN = "MigrationWarningShown"
+        private const val PREF_WHATS_NEW_SHOWN_101 = "WhatsNewShown101"
 
         /**
          * Built-in icons a clone space can use, as (drawable, label) pairs.
@@ -83,6 +94,7 @@ class MainActivity : LoadingActivity() {
             initViewPager()
             initFab()
             initToolbarSubTitle()
+            postFirstRunNotices()
 
             
             checkStoragePermission()
@@ -273,6 +285,100 @@ class MainActivity : LoadingActivity() {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error in initToolbarSubTitle: ${e.message}")
+        }
+    }
+
+    /**
+     * Pemberitahuan jalan-pertama (fix 1.0.1): peringatan migrasi bila
+     * MaxCloner masih terinstal, lalu tur "Yang Baru di 1.0.0" sekali
+     * sesudah update. Ditunda sebentar supaya tidak menumpuk dengan
+     * dialog izin penyimpanan/VPN di onCreate.
+     */
+    private fun postFirstRunNotices() {
+        try {
+            Handler(Looper.getMainLooper()).postDelayed({
+                try {
+                    if (!isFinishing) {
+                        maybeShowMigrationWarning()
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error showing first-run notices: ${e.message}")
+                }
+            }, 800)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error posting first-run notices: ${e.message}")
+        }
+    }
+
+    /** true bila paket terinstal (QUERY_ALL_PACKAGES sudah dideklarasikan). */
+    private fun isPackageInstalled(packageName: String): Boolean {
+        return try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                packageManager.getPackageInfo(
+                        packageName,
+                        PackageManager.PackageInfoFlags.of(0)
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                packageManager.getPackageInfo(packageName, 0)
+            }
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        } catch (e: Exception) {
+            Log.w(TAG, "Could not check package $packageName: ${e.message}")
+            false
+        }
+    }
+
+    /**
+     * Peringatan migrasi (fix 1.0.1): bila MaxCloner masih terinstal,
+     * beri tahu sekali bahwa clone lamanya tidak ikut pindah — migrasi
+     * otomatis tidak mungkin tanpa root (UID berbeda, /data/data paket
+     * lain tidak bisa dibaca) dan MaxCloner tidak punya fitur backup.
+     * Sesudah dialog ditutup, lanjut ke tur Yang Baru bila belum tampil.
+     */
+    private fun maybeShowMigrationWarning() {
+        try {
+            val prefs = AppManager.mRemarkSharedPreferences
+            if (prefs.getBoolean(PREF_MIGRATION_WARNING_SHOWN, false)) {
+                maybeShowWhatsNew()
+                return
+            }
+            if (!isPackageInstalled(OLD_CLONER_PACKAGE)) {
+                maybeShowWhatsNew()
+                return
+            }
+            MaterialDialog(this).show {
+                title(R.string.migration_title)
+                message(R.string.migration_message)
+                positiveButton(R.string.done) {
+                    try {
+                        prefs.edit { putBoolean(PREF_MIGRATION_WARNING_SHOWN, true) }
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Error saving migration flag: ${e.message}")
+                    }
+                    maybeShowWhatsNew()
+                }
+                cancelable(true)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error showing migration warning: ${e.message}")
+            maybeShowWhatsNew()
+        }
+    }
+
+    /** Tur "Yang Baru di 1.0.0" — sekali sesudah update ke 1.0.1. */
+    private fun maybeShowWhatsNew() {
+        try {
+            val prefs = AppManager.mRemarkSharedPreferences
+            if (prefs.getBoolean(PREF_WHATS_NEW_SHOWN_101, false)) {
+                return
+            }
+            prefs.edit { putBoolean(PREF_WHATS_NEW_SHOWN_101, true) }
+            WhatsNewDialog.show(this)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error showing whats-new tour: ${e.message}")
         }
     }
 

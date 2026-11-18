@@ -125,10 +125,21 @@
     <string name="check_update">Check for update</string>
     <string name="check_update_summary">Check whether a newer CloneKu version is available</string>
     <string name="update_checking">Checking for update…</string>
-    <string name="update_not_configured">Update check is not configured yet. The CloneKu release repository does not exist yet, so there is no update server to check. You can still update via Obtainium.</string>
+    <string name="update_not_configured">The update check could not reach the update server. Try again later, or update via Obtainium.</string>
     <string name="update_up_to_date">CloneKu is up to date (%1$s).</string>
     <string name="update_available_title">Update available</string>
     <string name="update_available_message">CloneKu %1$s is available (you have %2$s).</string>
     <string name="update_download">Download</string>
     <string name="update_check_failed">Could not check for update: %1$s</string>
+
+    <!-- Migration warning from MaxCloner (fix 1.0.1) -->
+    <string name="migration_title">Old clones do not carry over</string>
+    <string name="migration_message">CloneKu is a new app, separate from MaxCloner. Clones you made in MaxCloner live in the old app data and cannot be moved automatically — Android does not let one app read another app data, and MaxCloner has no backup feature.\n\nRecreate the clones you need in CloneKu by tapping the + button.</string>
+    <string name="empty_title">No clones yet</string>
+    <string name="empty_hint">Tap the + button to clone an app.\n\nClones you made in MaxCloner do not carry over to CloneKu — recreate them here.</string>
+
+    <!-- "New in 1.0.0" tour (fix 1.0.1) -->
+    <string name="whats_new_title">New in 1.0.0</string>
+    <string name="whats_new_message">CloneKu 1.0.0 brings:\n\n• Long-press a clone → Back up data / Restore data: save a clone data to a ZIP file and restore it later.\n\n• Tap the space name in the toolbar → change the space name and icon (e.g. Work, Personal).\n\n• Risk labels on the app picker screen: banking and payment apps that use Play Integrity are marked “Likely to be rejected” before cloning.</string>
+    <string name="whats_new_summary">Show the 1.0.0 new-features tour again</string>
 </resources>
