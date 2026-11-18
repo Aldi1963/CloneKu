@@ -2,61 +2,55 @@
 <resources>
 
     <!--
-      Zenith OS palette.
-      Obsidian base tuned for OLED, neon cyan as "signal", electric purple as
-      "processing". See MAXCLONER.md for the design system this comes from.
+      CloneKu palette (Clipku navy).
+      Flat navy family built around the Clipku brand colour #243370.
+      No gradients anywhere: every surface is a single flat colour, in both
+      the dark theme this app ships and the system light appearance.
+      Text colours are picked for contrast on the dark navy background:
+      on-surface ~13:1, accent ~7:1, on-surface-variant ~8:1.
     -->
 
-    <!-- Base surfaces -->
+    <!-- Brand -->
     <color name="cloneku_navy">#243370</color>
-    <color name="zenith_obsidian">#0A0C10</color>
-    <color name="zenith_surface">#111318</color>
-    <color name="zenith_surface_container_lowest">#0C0E12</color>
-    <color name="zenith_surface_container_low">#1A1C20</color>
-    <color name="zenith_surface_container">#1E2024</color>
-    <color name="zenith_surface_container_high">#282A2E</color>
-    <color name="zenith_surface_container_highest">#333539</color>
+    <color name="cloneku_navy_dark">#1B274F</color>
+    <color name="cloneku_navy_deep">#10182E</color>
 
-    <!-- Glass layers: 60% opacity over the obsidian base -->
-    <color name="zenith_glass">#99161B22</color>
-    <color name="zenith_glass_strong">#CC161B22</color>
+    <!-- Surfaces: darker navies, stepping up with elevation -->
+    <color name="cloneku_surface">#1B274F</color>
+    <color name="cloneku_surface_container">#232F57</color>
+    <color name="cloneku_surface_container_high">#2C3B6B</color>
+    <color name="cloneku_surface_container_highest">#37487F</color>
 
-    <!-- Signal (cyan) -->
-    <color name="zenith_cyan">#00F2FF</color>
-    <color name="zenith_cyan_dim">#00DBE7</color>
-    <color name="zenith_cyan_bright">#74F5FF</color>
-    <color name="zenith_on_cyan">#00363A</color>
-    <color name="zenith_cyan_glow">#3300F2FF</color>
-    <color name="zenith_cyan_rim">#5900F2FF</color>
-    <color name="zenith_cyan_grid">#0D00F2FF</color>
+    <!-- Glass layers: 60% opacity over the navy base -->
+    <color name="cloneku_glass">#991B274F</color>
+    <color name="cloneku_glass_strong">#CC1B274F</color>
 
-    <!-- Processing (purple) -->
-    <color name="zenith_purple">#8B5CF6</color>
-    <color name="zenith_purple_light">#D0BCFF</color>
-    <color name="zenith_on_purple">#3C0091</color>
-    <color name="zenith_purple_glow">#338B5CF6</color>
+    <!-- Accent: light periwinkle-navy, readable on the deep navy base -->
+    <color name="cloneku_accent">#8FA8F0</color>
+    <color name="cloneku_accent_dim">#6B84D6</color>
+    <color name="cloneku_on_accent">#10182E</color>
 
     <!-- Text -->
-    <color name="zenith_on_surface">#E2E2E8</color>
-    <color name="zenith_on_surface_variant">#B9CACB</color>
-    <color name="zenith_outline">#849495</color>
-    <color name="zenith_outline_variant">#3A494B</color>
+    <color name="cloneku_on_surface">#E9EBF5</color>
+    <color name="cloneku_on_surface_variant">#A9B4D6</color>
+    <color name="cloneku_outline">#5F6E9E</color>
+    <color name="cloneku_outline_variant">#2E3A61</color>
 
     <!-- Alert -->
-    <color name="zenith_danger">#FF2D55</color>
-    <color name="zenith_on_danger">#690005</color>
+    <color name="cloneku_danger">#FF2D55</color>
+    <color name="cloneku_on_danger">#690005</color>
 
     <!--
       Legacy aliases. Layouts inherited from upstream still reference these
-      names; remapping them onto the Zenith palette avoids touching every
+      names; remapping them onto the CloneKu palette avoids touching every
       layout at once.
     -->
-    <color name="primary">@color/zenith_surface</color>
-    <color name="primary_dark">@color/zenith_obsidian</color>
-    <color name="primary_light">@color/zenith_surface_container_high</color>
-    <color name="accent">@color/zenith_cyan</color>
-    <color name="primary_text">@color/zenith_on_surface</color>
-    <color name="secondary_text">@color/zenith_on_surface_variant</color>
+    <color name="primary">@color/cloneku_navy</color>
+    <color name="primary_dark">@color/cloneku_navy_deep</color>
+    <color name="primary_light">@color/cloneku_surface_container_high</color>
+    <color name="accent">@color/cloneku_accent</color>
+    <color name="primary_text">@color/cloneku_on_surface</color>
+    <color name="secondary_text">@color/cloneku_on_surface_variant</color>
     <color name="white">#FFFFFFFF</color>
 
 </resources>

@@ -1,4 +1,4 @@
-# BlackBox Virtual Environment - Complete User Guide
+# CloneKu Virtual Environment - Complete User Guide
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -16,7 +16,7 @@
 
 ## Overview
 
-BlackBox is a comprehensive Android virtualization solution that creates isolated environments for running apps. The latest version includes significant improvements for:
+CloneKu is a comprehensive Android virtualization solution that creates isolated environments for running apps. The latest version includes significant improvements for:
 
 - **App Installation & Management**: Robust app installation with cloning prevention
 - **WebView Support**: Complete WebView compatibility for browsers and web apps
@@ -36,7 +36,7 @@ BlackBox is a comprehensive Android virtualization solution that creates isolate
 - Internet connection for initial setup
 
 ### Basic Installation
-1. **Download BlackBox APK** from the official source
+1. **Download CloneKu APK** from the official source
 2. **Install the APK** using your preferred method
 3. **Grant Permissions** when prompted:
    - Storage access
@@ -337,7 +337,7 @@ adb logcat | grep "BlackBox"
 # 1. Ensure sufficient storage space
 # 2. Check APK file integrity
 # 3. Verify package compatibility
-# 4. Clear BlackBox cache
+# 4. Clear CloneKu cache
 ```
 
 #### WebView Issues
@@ -450,7 +450,7 @@ boolean success = GoogleAccountManagerProxy.addAccount(account, password, extras
 ## Frequently Asked Questions
 
 ### Q: Why do some apps show black screens?
-**A**: This is usually caused by context or resource loading issues. The new BlackBox version includes comprehensive fixes for:
+**A**: This is usually caused by context or resource loading issues. The new CloneKu version includes comprehensive fixes for:
 - Context management
 - Resource loading
 - Activity lifecycle
@@ -471,7 +471,7 @@ boolean success = GoogleAccountManagerProxy.addAccount(account, password, extras
 - Graceful fallback mechanisms
 
 ### Q: How do I prevent app cloning issues?
-**A**: BlackBox now includes:
+**A**: CloneKu now includes:
 - Automatic cloning prevention
 - Package validation
 - Security checks
@@ -491,7 +491,7 @@ boolean success = GoogleAccountManagerProxy.addAccount(account, password, extras
 ### Getting Help
 - **Documentation**: Check this Docs.md file
 - **Logs**: Enable debug mode and analyze logs
-- **Community**: Join BlackBox user forums
+- **Community**: Join CloneKu user forums
 - **Issues**: Report bugs with detailed logs
 
 ### Version History
@@ -511,10 +511,10 @@ boolean success = GoogleAccountManagerProxy.addAccount(account, password, extras
 
 ## Conclusion
 
-The new BlackBox virtual environment provides a robust, feature-rich solution for Android app virtualization. With comprehensive WebView support, Google services integration, and background job management, it offers enterprise-grade functionality for both developers and end users.
+The new CloneKu virtual environment provides a robust, feature-rich solution for Android app virtualization. With comprehensive WebView support, Google services integration, and background job management, it offers enterprise-grade functionality for both developers and end users.
 
 For the best experience:
-1. **Keep BlackBox updated** to the latest version
+1. **Keep CloneKu updated** to the latest version
 2. **Enable debug logging** when troubleshooting
 3. **Monitor system resources** for optimal performance
 4. **Report issues** with detailed logs for faster resolution

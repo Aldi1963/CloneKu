@@ -22,7 +22,7 @@
     <string name="hider">偽裝</string>
     <string name="hide_root">隱藏Root</string>
     <string name="hide_xposed">隱藏Xposed</string>
-    <string name="userRemark">用戶備註</string>
+    <string name="space_name">空間名稱</string>
     <string name="done">確定</string>
     <string name="cancel">取消</string>
     <string name="permission_setting">許可權設定</string>

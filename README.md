@@ -36,7 +36,7 @@ a maintained continuation of the BlackBox virtual engine. All of the hard
 virtualization work belongs to those projects.
 
 Licensed under the Apache License 2.0 — see [LICENSE](LICENSE). Modifications made by
-this fork are listed in [NOTICE](NOTICE) and explained in [MAXCLONER.md](MAXCLONER.md).
+this fork are listed in [NOTICE](NOTICE) and explained in [CLONEKU.md](CLONEKU.md).
 
 ## What this fork changes
 
@@ -49,7 +49,7 @@ app the base APK contains **no native code at all** — every `.so` lives in
 received zero native libraries and no split resources. This fork installs every split
 and extracts native libraries from all of them.
 
-Everything else is rebranding. Details in [MAXCLONER.md](MAXCLONER.md).
+Everything else is rebranding. Details in [CLONEKU.md](CLONEKU.md).
 
 ## Building
 

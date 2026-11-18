@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Splash / boot background. Flat Clipku navy, no gradient: the old Zenith
+  version layered radial cyan and purple glows over obsidian.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/cloneku_navy_deep" />
+</shape>

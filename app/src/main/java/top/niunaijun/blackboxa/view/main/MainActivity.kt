@@ -8,11 +8,17 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
+import android.widget.GridLayout
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import top.niunaijun.blackbox.BlackBoxCore
 import top.niunaijun.blackboxa.R
 import top.niunaijun.blackboxa.app.App
@@ -40,6 +46,21 @@ class MainActivity : LoadingActivity() {
         private const val TAG = "MainActivity"
         private const val STORAGE_PERMISSION_REQUEST_CODE = 1001
         private const val VPN_PERMISSION_REQUEST_CODE = 1002
+
+        /**
+         * Built-in icons a clone space can use, as (drawable, label) pairs.
+         * The chosen index is stored in the UserRemark SharedPreferences
+         * under "SpaceIcon<userId>". Framework drawables are used so no
+         * extra assets are needed.
+         */
+        val SPACE_ICONS = listOf(
+                android.R.drawable.ic_menu_view to R.string.space_icon_general,
+                android.R.drawable.ic_menu_agenda to R.string.space_icon_work,
+                android.R.drawable.ic_menu_myplaces to R.string.space_icon_personal,
+                android.R.drawable.ic_menu_slideshow to R.string.space_icon_game,
+                android.R.drawable.ic_menu_share to R.string.space_icon_social,
+                android.R.drawable.ic_menu_gallery to R.string.space_icon_media
+        )
 
         fun start(context: Context) {
             val intent = Intent(context, MainActivity::class.java)
@@ -77,7 +98,7 @@ class MainActivity : LoadingActivity() {
         } catch (e: Exception) {
             Log.e(TAG, "Critical error in onCreate: ${e.message}")
             
-            showErrorDialog("Failed to initialize app: ${e.message}")
+            showErrorDialog(getString(R.string.init_failed, e.message ?: ""))
         }
     }
 
@@ -149,13 +170,10 @@ class MainActivity : LoadingActivity() {
     private fun showStoragePermissionDialog() {
         try {
             MaterialDialog(this).show {
-                title(text = "Storage Permission Required")
-                message(
-                        text =
-                                "This app needs 'All Files Access' permission to properly run sandboxed apps. Without this permission, some apps may not work correctly.\n\nPlease grant permission in the next screen."
-                )
-                positiveButton(text = "Grant Permission") { openAllFilesAccessSettings() }
-                negativeButton(text = "Later") { Log.w(TAG, "User postponed storage permission") }
+                title(res = R.string.storage_permission_title)
+                message(text = getString(R.string.storage_permission_message))
+                positiveButton(res = R.string.grant_permission) { openAllFilesAccessSettings() }
+                negativeButton(res = R.string.later) { Log.w(TAG, "User postponed storage permission") }
                 cancelable(false)
             }
         } catch (e: Exception) {
@@ -236,9 +254,9 @@ class MainActivity : LoadingActivity() {
     private fun showErrorDialog(message: String) {
         try {
             MaterialDialog(this).show {
-                title(text = "Error")
+                title(res = R.string.error_title)
                 message(text = message)
-                positiveButton(text = "OK") { finish() }
+                positiveButton(res = R.string.ok) { finish() }
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error showing error dialog: ${e.message}")
@@ -249,34 +267,85 @@ class MainActivity : LoadingActivity() {
     private fun initToolbarSubTitle() {
         try {
             updateUserRemark(0)
-            
+
             viewBinding.toolbarLayout.toolbar.getChildAt(1)?.setOnClickListener {
-                try {
-                    MaterialDialog(this).show {
-                        title(res = R.string.userRemark)
-                        input(
-                                hintRes = R.string.userRemark,
-                                prefill = viewBinding.toolbarLayout.toolbar.subtitle
-                        ) { _, input ->
-                            try {
-                                AppManager.mRemarkSharedPreferences.edit {
-                                    putString("Remark$currentUser", input.toString())
-                                    viewBinding.toolbarLayout.toolbar.subtitle = input
-                                }
-                            } catch (e: Exception) {
-                                Log.e(TAG, "Error saving user remark: ${e.message}")
-                            }
-                        }
-                        positiveButton(res = R.string.done)
-                        negativeButton(res = R.string.cancel)
-                    }
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error showing remark dialog: ${e.message}")
-                }
+                showEditSpaceDialog()
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error in initToolbarSubTitle: ${e.message}")
         }
+    }
+
+    /**
+     * Edit the current clone space: its name and its icon. Stored in the same
+     * UserRemark SharedPreferences the space name already used, under
+     * "Remark<userId>" (name) and "SpaceIcon<userId>" (icon index into
+     * SPACE_ICONS). An empty name falls back to the default "Space N".
+     */
+    private fun showEditSpaceDialog() {
+        try {
+            var selectedIcon = getSpaceIcon(currentUser)
+            MaterialDialog(this).show {
+                title(res = R.string.space_name)
+                customView(R.layout.dialog_space_edit)
+                val customView = getCustomView()
+                val nameInput = customView.findViewById<EditText>(R.id.space_name_input)
+                nameInput.setText(getSpaceName(currentUser))
+                nameInput.setSelection(nameInput.text.length)
+                val iconGrid = customView.findViewById<GridLayout>(R.id.space_icon_grid)
+                fun refreshSelection() {
+                    for (i in 0 until iconGrid.childCount) {
+                        val item = iconGrid.getChildAt(i)
+                        item.isSelected =
+                                (item.tag as? String)?.toIntOrNull() == selectedIcon
+                    }
+                }
+                for (i in 0 until iconGrid.childCount) {
+                    val item = iconGrid.getChildAt(i)
+                    item.setOnClickListener {
+                        selectedIcon = (item.tag as? String)?.toIntOrNull() ?: 0
+                        refreshSelection()
+                    }
+                }
+                refreshSelection()
+                positiveButton(res = R.string.done) {
+                    try {
+                        val name = nameInput.text.toString().trim()
+                        AppManager.mRemarkSharedPreferences.edit {
+                            putString(
+                                    "Remark$currentUser",
+                                    name.ifEmpty {
+                                        getString(
+                                                R.string.space_name_default,
+                                                (currentUser + 1).toString()
+                                        )
+                                    }
+                            )
+                            putInt("SpaceIcon$currentUser", selectedIcon)
+                        }
+                        updateUserRemark(currentUser)
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Error saving space name: ${e.message}")
+                    }
+                }
+                negativeButton(res = R.string.cancel)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error showing space edit dialog: ${e.message}")
+        }
+    }
+
+    /** Display name of a clone space; defaults to "Space 1", "Space 2", ... */
+    private fun getSpaceName(userId: Int): String {
+        val defaultName = getString(R.string.space_name_default, (userId + 1).toString())
+        val remark = AppManager.mRemarkSharedPreferences.getString("Remark$userId", defaultName)
+        return if (remark.isNullOrEmpty()) defaultName else remark
+    }
+
+    /** Index into SPACE_ICONS for a clone space; 0 (General) when unset. */
+    private fun getSpaceIcon(userId: Int): Int {
+        val index = AppManager.mRemarkSharedPreferences.getInt("SpaceIcon$userId", 0)
+        return index.coerceIn(SPACE_ICONS.indices)
     }
 
     private fun initViewPager() {
@@ -359,16 +428,25 @@ class MainActivity : LoadingActivity() {
 
     private fun updateUserRemark(userId: Int) {
         try {
-            var remark =
-                    AppManager.mRemarkSharedPreferences.getString("Remark$userId", "User $userId")
-            if (remark.isNullOrEmpty()) {
-                remark = "User $userId"
-            }
+            val toolbar = viewBinding.toolbarLayout.toolbar
+            toolbar.subtitle = getSpaceName(userId)
 
-            viewBinding.toolbarLayout.toolbar.subtitle = remark
+            // Show the space icon at the start of the subtitle.
+            val subtitleView = toolbar.getChildAt(1) as? TextView
+            val icon =
+                    ContextCompat.getDrawable(this, SPACE_ICONS[getSpaceIcon(userId)].first)
+            icon?.let {
+                DrawableCompat.setTint(
+                        it,
+                        ContextCompat.getColor(this, R.color.cloneku_accent)
+                )
+            }
+            subtitleView?.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null)
+            subtitleView?.compoundDrawablePadding =
+                    Resolution.convertDpToPixel(6F, App.getContext()).toInt()
         } catch (e: Exception) {
             Log.e(TAG, "Error updating user remark: ${e.message}")
-            viewBinding.toolbarLayout.toolbar.subtitle = "User $userId"
+            viewBinding.toolbarLayout.toolbar.subtitle = getSpaceName(userId)
         }
     }
 
@@ -402,6 +480,9 @@ class MainActivity : LoadingActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         try {
             when (item.itemId) {
+                R.id.edit_space -> {
+                    showEditSpaceDialog()
+                }
                 R.id.main_git -> {
                     val intent =
                             Intent(

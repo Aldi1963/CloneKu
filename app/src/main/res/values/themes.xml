@@ -1,115 +1,115 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--
-      Zenith OS theme. Dark-only by design: the palette is built around an
-      obsidian base for OLED, so a light variant would defeat the aesthetic.
+      CloneKu theme. Dark-only by design: the palette is built around a deep
+      navy base, so a light variant would defeat the aesthetic.
       forceDarkAllowed stays false for the same reason - we are already dark
       and do not want the system inverting anything.
     -->
-    <style name="Theme.BlackBox" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="Theme.CloneKu" parent="Theme.Material3.Dark.NoActionBar">
 
-        <item name="colorPrimary">@color/zenith_cyan</item>
-        <item name="colorOnPrimary">@color/zenith_on_cyan</item>
-        <item name="colorPrimaryContainer">@color/zenith_cyan_dim</item>
-        <item name="colorOnPrimaryContainer">@color/zenith_on_cyan</item>
+        <item name="colorPrimary">@color/cloneku_accent</item>
+        <item name="colorOnPrimary">@color/cloneku_on_accent</item>
+        <item name="colorPrimaryContainer">@color/cloneku_navy</item>
+        <item name="colorOnPrimaryContainer">@color/cloneku_on_surface</item>
 
-        <item name="colorSecondary">@color/zenith_purple</item>
-        <item name="colorOnSecondary">@color/zenith_on_surface</item>
-        <item name="colorSecondaryContainer">@color/zenith_purple</item>
-        <item name="colorOnSecondaryContainer">@color/zenith_purple_light</item>
+        <item name="colorSecondary">@color/cloneku_accent_dim</item>
+        <item name="colorOnSecondary">@color/cloneku_on_surface</item>
+        <item name="colorSecondaryContainer">@color/cloneku_navy</item>
+        <item name="colorOnSecondaryContainer">@color/cloneku_on_surface</item>
 
-        <item name="android:colorBackground">@color/zenith_obsidian</item>
-        <item name="colorSurface">@color/zenith_surface</item>
-        <item name="colorSurfaceVariant">@color/zenith_surface_container</item>
-        <item name="colorOnSurface">@color/zenith_on_surface</item>
-        <item name="colorOnSurfaceVariant">@color/zenith_on_surface_variant</item>
-        <item name="colorOutline">@color/zenith_outline</item>
-        <item name="colorOutlineVariant">@color/zenith_outline_variant</item>
+        <item name="android:colorBackground">@color/cloneku_navy_deep</item>
+        <item name="colorSurface">@color/cloneku_surface</item>
+        <item name="colorSurfaceVariant">@color/cloneku_surface_container</item>
+        <item name="colorOnSurface">@color/cloneku_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/cloneku_on_surface_variant</item>
+        <item name="colorOutline">@color/cloneku_outline</item>
+        <item name="colorOutlineVariant">@color/cloneku_outline_variant</item>
 
-        <item name="colorError">@color/zenith_danger</item>
-        <item name="colorOnError">@color/zenith_on_danger</item>
+        <item name="colorError">@color/cloneku_danger</item>
+        <item name="colorOnError">@color/cloneku_on_danger</item>
 
-        <!-- Let the shader background run edge to edge behind the system bars -->
+        <!-- Flat navy background edge to edge behind the system bars -->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowBackground">@color/zenith_obsidian</item>
+        <item name="android:windowBackground">@color/cloneku_navy_deep</item>
 
-        <item name="actionMenuTextColor">@color/zenith_cyan</item>
+        <item name="actionMenuTextColor">@color/cloneku_accent</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
 
         <item name="fontFamily">@font/inter</item>
         <item name="android:fontFamily">@font/inter</item>
 
-        <item name="materialAlertDialogTheme">@style/Zenith.AlertDialog</item>
+        <item name="materialAlertDialogTheme">@style/CloneKu.AlertDialog</item>
     </style>
 
     <style name="ToolBarColorStyle" parent="ThemeOverlay.Material3.Dark.ActionBar">
-        <item name="actionMenuTextColor">@color/zenith_cyan</item>
-        <item name="colorControlNormal">@color/zenith_cyan</item>
+        <item name="actionMenuTextColor">@color/cloneku_accent</item>
+        <item name="colorControlNormal">@color/cloneku_accent</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
     <style name="WelcomeTheme" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="android:windowBackground">@drawable/zenith_boot_background</item>
+        <item name="android:windowBackground">@drawable/cloneku_boot_background</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="Zenith.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <item name="colorSurface">@color/zenith_surface_container</item>
-        <item name="colorOnSurface">@color/zenith_on_surface</item>
-        <item name="buttonBarPositiveButtonStyle">@style/Zenith.DialogButton</item>
-        <item name="buttonBarNegativeButtonStyle">@style/Zenith.DialogButton</item>
+    <style name="CloneKu.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorSurface">@color/cloneku_surface_container</item>
+        <item name="colorOnSurface">@color/cloneku_on_surface</item>
+        <item name="buttonBarPositiveButtonStyle">@style/CloneKu.DialogButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/CloneKu.DialogButton</item>
     </style>
 
-    <style name="Zenith.DialogButton" parent="Widget.Material3.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/zenith_cyan</item>
+    <style name="CloneKu.DialogButton" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/cloneku_accent</item>
     </style>
 
     <!-- Typography: Space Grotesk for headlines, Inter for body, mono for data -->
 
-    <style name="Zenith.Display" parent="TextAppearance.Material3.HeadlineLarge">
+    <style name="CloneKu.Display" parent="TextAppearance.Material3.HeadlineLarge">
         <item name="android:fontFamily">@font/space_grotesk</item>
-        <item name="android:textColor">@color/zenith_on_surface</item>
+        <item name="android:textColor">@color/cloneku_on_surface</item>
         <item name="android:letterSpacing">-0.02</item>
     </style>
 
-    <style name="Zenith.Headline" parent="TextAppearance.Material3.TitleLarge">
+    <style name="CloneKu.Headline" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:fontFamily">@font/space_grotesk</item>
-        <item name="android:textColor">@color/zenith_on_surface</item>
+        <item name="android:textColor">@color/cloneku_on_surface</item>
         <item name="android:letterSpacing">0.01</item>
     </style>
 
-    <style name="Zenith.Body" parent="TextAppearance.Material3.BodyMedium">
+    <style name="CloneKu.Body" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:fontFamily">@font/inter</item>
-        <item name="android:textColor">@color/zenith_on_surface</item>
+        <item name="android:textColor">@color/cloneku_on_surface</item>
     </style>
 
     <!-- Data, IDs, version strings. Uppercase with wide tracking per the spec. -->
-    <style name="Zenith.LabelMono" parent="TextAppearance.Material3.LabelSmall">
+    <style name="CloneKu.LabelMono" parent="TextAppearance.Material3.LabelSmall">
         <item name="android:fontFamily">@font/jetbrains_mono</item>
-        <item name="android:textColor">@color/zenith_on_surface_variant</item>
+        <item name="android:textColor">@color/cloneku_on_surface_variant</item>
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">0.05</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <style name="Zenith.LabelMono.Cyan">
-        <item name="android:textColor">@color/zenith_cyan</item>
+    <style name="CloneKu.LabelMono.Accent">
+        <item name="android:textColor">@color/cloneku_accent</item>
     </style>
 
     <!--
       45-degree chamfered corners, the spec's motif for primary actions.
       Material's shape system calls this corner family "cut".
     -->
-    <style name="Zenith.Fab.Chamfered" parent="">
+    <style name="CloneKu.Fab.Chamfered" parent="">
         <item name="cornerFamily">cut</item>
         <item name="cornerSize">14dp</item>
     </style>
 
-    <style name="Zenith.Toolbar.Title" parent="TextAppearance.Material3.TitleLarge">
+    <style name="CloneKu.Toolbar.Title" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:fontFamily">@font/space_grotesk</item>
-        <item name="android:textColor">@color/zenith_on_surface</item>
+        <item name="android:textColor">@color/cloneku_on_surface</item>
         <item name="android:letterSpacing">0.08</item>
         <item name="android:textSize">20sp</item>
     </style>

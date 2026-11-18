@@ -379,7 +379,7 @@ class AppsRepository {
                                             .getPackageArchiveInfo(source, 0)
                             if (packageInfo != null && packageInfo.packageName == hostPackageName) {
                                 resultLiveData.postValue(
-                                        "Cannot install BlackBox app from within BlackBox. This would create infinite recursion and is not allowed for security reasons."
+                                        getString(R.string.cannot_install_cloneku)
                                 )
                                 return
                             }
@@ -408,7 +408,7 @@ class AppsRepository {
             scanUser()
         } catch (e: Exception) {
             Log.e(TAG, "Error installing APK: ${e.message}")
-            resultLiveData.postValue("Installation failed: ${e.message}")
+            resultLiveData.postValue(getString(R.string.install_failed, e.message ?: ""))
         }
     }
 
@@ -420,7 +420,7 @@ class AppsRepository {
             resultLiveData.postValue(getString(R.string.uninstall_success))
         } catch (e: Exception) {
             Log.e(TAG, "Error uninstalling APK: ${e.message}")
-            resultLiveData.postValue("Uninstallation failed: ${e.message}")
+            resultLiveData.postValue(getString(R.string.uninstall_failed, e.message ?: ""))
         }
     }
 
@@ -440,7 +440,7 @@ class AppsRepository {
             resultLiveData.postValue(getString(R.string.clear_success))
         } catch (e: Exception) {
             Log.e(TAG, "Error clearing APK data: ${e.message}")
-            resultLiveData.postValue("Clear failed: ${e.message}")
+            resultLiveData.postValue(getString(R.string.clear_failed, e.message ?: ""))
         }
     }
 
@@ -460,6 +460,7 @@ class AppsRepository {
                 blackBoxCore.deleteUser(id)
                 AppManager.mRemarkSharedPreferences.edit().apply {
                     remove("Remark$id")
+                    remove("SpaceIcon$id")
                     remove("AppList$id")
                     apply()
                 }
